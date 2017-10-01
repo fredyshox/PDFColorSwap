@@ -11,7 +11,8 @@ Color conversion functions working on colors from different color spaces.
 Current supported cs's: RGB, CMYK, GrayScale
 """
 
-def rgbToCMYK( r, g, b):
+
+def rgbToCMYK(r, g, b):
     """
     Converts RGB to CMYK
     :param r: red value (from 0.0 to 1.0)
@@ -25,11 +26,13 @@ def rgbToCMYK( r, g, b):
     y = (1-b-k)/(1-k)
     return c,m,y,k
 
-def cmykToRGB(c,m,y,k):
+
+def cmykToRGB(c, m, y, k):
     r = (1-c)*(1-k)
     g = (1-m)*(1-k)
     b = (1-y)*(1-k)
     return r,g,b
+
 
 def grayToRGB(grey):
     r = grey
@@ -38,7 +41,7 @@ def grayToRGB(grey):
     return r,g,b
 
 
-def rgbToGray(r,g,b):
+def rgbToGray(r, g, b):
     """
     Converts RGB to GrayScale using luminosity method
     :param r: red value (from 0.0 to 1.0)
@@ -49,6 +52,18 @@ def rgbToGray(r,g,b):
     g = 0.21*r + 0.72*g + 0.07*b
     return g
 
-def hexStringToRGB(hexString):
-    #TODO
-    return
+
+def hexStringToRGB(hex):
+    """
+    Converts hex color string to RGB values
+    :param hex: color string in format: #rrggbb or rrggbb with 8-bit values in hexadecimal system
+    :return: tuple containing RGB color values (from 0.0 to 1.0 each)
+    """
+    temp = hex
+    length = len(hex)
+    if temp[0] == "#":
+        temp = hex[1:length]
+    if not len(temp) == 6:
+        return None
+    colorArr = bytearray.fromhex(temp)
+    return colorArr[0], colorArr[1], colorArr[2]
