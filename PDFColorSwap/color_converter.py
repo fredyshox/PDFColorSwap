@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#! /usr/bin/env python
 #
 # color_converter.py
 # PdfColorConverter
@@ -6,7 +6,6 @@
 # Created by Kacper Raczy on 31.09.2017.
 # Copyright (c) 2017 Kacper Raczy. All rights reserved.
 #
-
 
 from PyPDF2.pdf import PdfFileWriter, PdfFileReader,PageObject, ContentStream
 from PyPDF2.utils import b_
