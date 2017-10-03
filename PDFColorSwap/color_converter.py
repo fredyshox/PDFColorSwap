@@ -10,7 +10,7 @@
 from PyPDF2.pdf import PdfFileWriter, PdfFileReader,PageObject, ContentStream
 from PyPDF2.utils import b_
 from PyPDF2.generic import FloatObject, NameObject
-from color_util import cmykToRGB, grayToRGB, rgbToCMYK
+from .color_util import cmykToRGB, grayToRGB, rgbToCMYK
 import os
 
 
