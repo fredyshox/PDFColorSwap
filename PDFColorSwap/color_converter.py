@@ -39,27 +39,25 @@ class PdfColorConverter(PdfFileWriter):
         content = page["/Contents"].getObject()
         if not isinstance(content, ContentStream):
             content = ContentStream(content, page.pdf)
-
         for index, val in enumerate(content.operations):
             operands = val[0]
             operator = val[1]
+
+            should_swap = False
             if operator == b_("cs"):
                 print("nonstroking color space")
             elif operator in self.operators:
                 if len(operands) == 3:
-                    if self._evaluateColor3(operator, operands, fromColor):
-                        print("probably rgb")
-                        self._removeCSRef(content, index)
-                        self._swapColorCmd(content, index, toColor)
+                    should_swap = self._evaluateColor3(operator, operands, fromColor)
                 elif len(operands) == 1:
-                    if self._evaluateColor1(operator, operands, fromColor):
-                        print("probably grayscale")
-                        self._removeCSRef(content, index)
-                        self._swapColorCmd(content, index, toColor)
+                    should_swap = self._evaluateColor1(operator, operands, fromColor)
                 elif len(operands) == 4:
-                    if self._evaluateColor4(operator, operands, fromColor):
-                        print("probably cmyk")
-                        self._removeCSRef(content, index)
+                    should_swap = self._evaluateColor4(operator, operands, fromColor)
+                # evaluating should swap
+                if should_swap:
+                    if self._removeCSRef(content, index):
+                        self._swapColorCmd(content, index - 1, toColor)
+                    else:
                         self._swapColorCmd(content, index, toColor)
 
         key = NameObject("/Contents")
@@ -71,7 +69,8 @@ class PdfColorConverter(PdfFileWriter):
         if index >= 1 and content.operations[index - 1][1] == b_("cs"):
             content.operations.pop(index - 1)
             print("removingCS")
-        return
+            return True
+        return False
 
 
     def _swapColorCmd(self, content, index, toColor):
@@ -79,7 +78,10 @@ class PdfColorConverter(PdfFileWriter):
         greenObj = FloatObject((toColor.green / 255.0))
         blueObj = FloatObject((toColor.blue / 255.0))
         operator = b_("rg")
-        content.operations[index] = ([redObj, greenObj, blueObj], operator)
+        obj = ([redObj, greenObj, blueObj], operator)
+        content.operations.pop(index)
+        content.operations.insert(index, obj)
+        return
 
 
     def _evaluateColor3(self, operator, operands, color):

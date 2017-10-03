@@ -27,13 +27,12 @@ def main():
     args = parser.parse_args()
 
     # input path management
-    currentPath = os.path.dirname(os.path.realpath(__file__))
+    currentPath = os.getcwd()
     if os.path.exists(args.input):
         filepath = args.input
     else:
         input_filename = os.path.split(args.input)[1]
-        filepath = currentPath + input_filename
-
+        filepath = currentPath + "/" + input_filename
     # opening the file with reader
     reader = PdfFileReader(filepath)
     if not args.password == None:
@@ -62,7 +61,7 @@ def main():
 
     # saving output pdf
     if args.outputDir==None:
-        path = currentPath + '/' + args.output[0]
+        path = currentPath + '/' + args.output
         outputStream = open(path, "wb")
     else:
         path = args.outputDir + args.output

@@ -28,17 +28,18 @@ $ python setup.py install
 ## Usage
 
 To use this tool, destination color hex string and path to input pdf file must be provided.
-Color hex is prefixed with # and contain 3 hexadecimal values corresponding to RGB color values (#rrggbb).
+Color hex must contain 3 hexadecimal values corresponding to RGB color values (rrggbb).
+Color hex can also be prefixed with #, but then it should be placed between pair of apostrophes ('#rrggbb')
 
 ### Examples
 ```
-$ pdfcolor.py #000066 input.pdf
+$ pdfcolor.py '#000066' input.pdf
 // converts whole document from black to dark blue
 
-$ pdfcolor.py -c #101010 -o myOutput.pdf #000066 input.pdf
+$ pdfcolor.py -c '#101010' -o myOutput.pdf '#000066' input.pdf
 // convert whole document from dark grey to dark blue and save as myOutput.pdf
 
-$ pdfcolor.py -c #101010 -p 0 -o myOutput.pdf #000066 input.pdf
+$ pdfcolor.py -c '#101010' -p 0 -o myOutput.pdf '#000066' input.pdf
 // convert only the first page from from dark grey to dark blue and save as myOutput.pdf
 ```
 
