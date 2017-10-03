@@ -6,7 +6,7 @@
 # Copyright (c) 2017 Kacper Raczy. All rights reserved.
 #
 
-from pdf_color import PdfColorConverter, RGBColor
+from color_converter import PdfColorConverter, RGBColor
 from PyPDF2 import PdfFileReader
 from color_util import hexStringToRGB
 import os
@@ -62,10 +62,10 @@ def main():
     # saving output pdf
     if args.outputDir==None:
         path = currentPath + '/' + args.output[0]
-        outputStream = file(path, "wb")
+        outputStream = open(path, "wb")
     else:
         path = args.outputDir + args.output
-        outputStream = file(path, "wb")
+        outputStream = open(path, "wb")
 
     colorWriter.write(outputStream)
 
