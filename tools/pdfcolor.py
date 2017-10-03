@@ -1,3 +1,4 @@
+# !/usr/bin/env python
 #
 # pdfcolor.py
 # pdfcolor swap
@@ -7,7 +8,7 @@
 #
 
 from PDFColorSwap.color_converter import PdfColorConverter, RGBColor
-from PyPDF2 import PdfFileReader
+from PyPDF2.pdf import PdfFileReader
 from PDFColorSwap.color_util import hexStringToRGB
 import os
 import argparse
