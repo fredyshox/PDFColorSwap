@@ -1,7 +1,6 @@
 # PDFColorSwap
 
 PDFColorSwap is a command line tool for color conversion of PDF files written in python. It can replace all occurrences of given color with another one.
-**** something ****
 
 It's very useful when there's a need to print something but the printer lacks or has low amount of black ink and has some color ink to spare. In this case swapping black color with for instance darker blue should get the job done. 
 
