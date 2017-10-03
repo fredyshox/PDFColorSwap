@@ -6,9 +6,9 @@
 # Copyright (c) 2017 Kacper Raczy. All rights reserved.
 #
 
-from color_converter import PdfColorConverter, RGBColor
+from PDFColorSwap.color_converter import PdfColorConverter, RGBColor
 from PyPDF2 import PdfFileReader
-from color_util import hexStringToRGB
+from PDFColorSwap.color_util import hexStringToRGB
 import os
 import argparse
 
