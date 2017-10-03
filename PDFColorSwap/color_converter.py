@@ -1,3 +1,4 @@
+#!/usr/bin/env python
 #
 # color_converter.py
 # PdfColorConverter
