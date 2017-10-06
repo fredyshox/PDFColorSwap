@@ -9,7 +9,7 @@
 
 from distutils.core import setup
 
-pcg_version = "0.2.4"
+pcg_version = "0.2.5"
 
 setup(name="PDFColorSwap",
       version=pcg_version,

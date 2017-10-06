@@ -15,7 +15,7 @@ Color conversion may not work correctly if pdf file is using different color spa
 ## Requirements
 
 * Python 2.7 or newer
-* PyPDF2 package(https://github.com/mstamy2/PyPDF2)
+* PyPDF2 package (https://github.com/mstamy2/PyPDF2)
 
 ## Installation
 

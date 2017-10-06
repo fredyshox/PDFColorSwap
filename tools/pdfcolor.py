@@ -24,6 +24,7 @@ def main():
     parser.add_argument("-c", help="color to be swapped(default black)", default="#000000", nargs=1, metavar="from_color", dest="from_color")
     parser.add_argument("-o", help="filename of output pdf", default="output.pdf", nargs=1, metavar="filename", dest="output")
     parser.add_argument("-O", help="save directory for output file(default current directory)", nargs=1, metavar="directory", dest="outputDir")
+    parser.add_argument("-d", help="debugging mode", action="store_true", dest="debug_mode")
     args = parser.parse_args()
 
     # input path management
@@ -38,7 +39,7 @@ def main():
     if not args.password == None:
         reader.decrypt(args.password)
 
-    colorWriter = PdfColorConverter()
+    colorWriter = PdfColorConverter(debug=args.debug_mode)
     colorWriter.appendPagesFromReader(reader)
 
     # extracting colors

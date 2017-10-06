@@ -24,6 +24,15 @@ class RGBColor(object):
 class PdfColorConverter(PdfFileWriter):
     operators = [b_("sc"), b_("rg"), b_("g"), b_("k")]
 
+    def __init__(self, debug=False):
+        PdfFileWriter.__init__(self)
+        self.debug = debug
+
+    def printDebug(self, str):
+        if self.debug:
+            print(str)
+        return
+
     def swapColor(self, pageIndex, fromColor, toColor):
         """
         Substitutes all the color switching operators with fromColor with toColor.
@@ -35,17 +44,20 @@ class PdfColorConverter(PdfFileWriter):
         if pageIndex>=self.getNumPages():
             print("That page doesn't exist")
             return
+
+        print("Evaluating page no. %d..." % pageIndex)
         page = self.getPage(pageIndex)
         content = page["/Contents"].getObject()
         if not isinstance(content, ContentStream):
             content = ContentStream(content, page.pdf)
+        swap_counter = 0
         for index, val in enumerate(content.operations):
             operands = val[0]
             operator = val[1]
 
             should_swap = False
             if operator == b_("cs"):
-                print("nonstroking color space")
+                self.printDebug("nonstroking color space")
             elif operator in self.operators:
                 if len(operands) == 3:
                     should_swap = self._evaluateColor3(operator, operands, fromColor)
@@ -55,6 +67,7 @@ class PdfColorConverter(PdfFileWriter):
                     should_swap = self._evaluateColor4(operator, operands, fromColor)
                 # evaluating should swap
                 if should_swap:
+                    swap_counter+=1
                     if self._removeCSRef(content, index):
                         self._swapColorCmd(content, index - 1, toColor)
                     else:
@@ -63,12 +76,13 @@ class PdfColorConverter(PdfFileWriter):
         key = NameObject("/Contents")
         page[key] = content
         page.compressContentStreams()
+        print("Replaced %d references of given color.\n" % swap_counter)
 
     # removing operator that switches color space
     def _removeCSRef(self, content, index):
         if index >= 1 and content.operations[index - 1][1] == b_("cs"):
             content.operations.pop(index - 1)
-            print("removingCS")
+            self.printDebug("removingCS")
             return True
         return False
 
