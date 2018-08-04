@@ -33,7 +33,7 @@ def main():
         filepath = args.input
     else:
         input_filename = os.path.split(args.input)[1]
-        filepath = currentPath + "/" + input_filename
+        filepath = os.path.join(currentPath, input_filename)
     # opening the file with reader
     reader = PdfFileReader(filepath)
     if not args.password == None:
@@ -62,10 +62,10 @@ def main():
 
     # saving output pdf
     if args.outputDir==None:
-        path = currentPath + '/' + args.output
+        path = os.path.join(currentPath, args.output)
         outputStream = open(path, "wb")
     else:
-        path = args.outputDir + args.output
+        path = os.path.join(args.outputDir, args.output)
         outputStream = open(path, "wb")
 
     colorWriter.write(outputStream)

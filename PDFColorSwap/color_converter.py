@@ -7,11 +7,10 @@
 # Copyright (c) 2017 Kacper Raczy. All rights reserved.
 #
 
-from PyPDF2.pdf import PdfFileWriter, PdfFileReader,PageObject, ContentStream
+from PyPDF2.pdf import PdfFileWriter, PdfFileReader, PageObject, ContentStream
 from PyPDF2.utils import b_
 from PyPDF2.generic import FloatObject, NameObject
 from .color_util import cmykToRGB, grayToRGB, rgbToCMYK
-import os
 
 
 class RGBColor(object):
@@ -57,7 +56,7 @@ class PdfColorConverter(PdfFileWriter):
 
             should_swap = False
             if operator == b_("cs"):
-                self.printDebug("nonstroking color space")
+                self.printDebug("Nonstroking color space.")
             elif operator in self.operators:
                 if len(operands) == 3:
                     should_swap = self._evaluateColor3(operator, operands, fromColor)
@@ -82,7 +81,7 @@ class PdfColorConverter(PdfFileWriter):
     def _removeCSRef(self, content, index):
         if index >= 1 and content.operations[index - 1][1] == b_("cs"):
             content.operations.pop(index - 1)
-            self.printDebug("removingCS")
+            self.printDebug("Removing CS")
             return True
         return False
 
